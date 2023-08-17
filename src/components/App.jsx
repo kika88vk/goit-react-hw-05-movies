@@ -1,28 +1,20 @@
-import { fetchTrendingMovies } from 'services/api';
+// import { fetchTrendingMovies } from 'services/api';
+import HomePage from 'pages/HomePage';
+import { Route, Routes, NavLink } from 'react-router-dom';
 
 export const App = () => {
-  const getMovies = async () => {
-    try {
-      const movies = await fetchTrendingMovies();
-      console.log('movies', movies);
-    } catch (error) {
-      console.log('error.message', error.message);
-    }
-  };
-
-  getMovies();
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101',
-      }}
-    >
-      React homework template
+    <div>
+      <header>
+        <nav>
+          <NavLink to="/">Home</NavLink>
+        </nav>
+      </header>
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </main>
     </div>
   );
 };
