@@ -16,8 +16,14 @@ export const fetchTrendingMovies = async () => {
     return data;
 }
 
-export const fetchMovieDetails = async (movieID) => {
-    const { data } = await axios.get(`${BASE_URL}/3/trending/movie/movie_id?language=en-US&api_key=${API_KEY}`, options);
+export const fetchMovieDetails = async (movieId) => {
+    const { data } = await axios.get(`${BASE_URL}/3/movie/${movieId}?language=en-US&api_key=${API_KEY}`, options);
+
+    return data;
+}
+
+export const fetchMovieCredits = async (movieId) => {
+    const { data } = await axios.get(`${BASE_URL}/3/movie/${movieId}/credits?language=en-US&api_key=${API_KEY}`, options);
 
     return data;
 }
