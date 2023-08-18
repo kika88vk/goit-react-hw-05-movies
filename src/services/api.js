@@ -15,3 +15,9 @@ export const fetchTrendingMovies = async () => {
     const { data } = await axios.get(`${BASE_URL}/3/trending/movie/day?language=en-US&api_key=${API_KEY}`, options);
     return data;
 }
+
+export const fetchMovieDetails = async (movieID) => {
+    const { data } = await axios.get(`${BASE_URL}/3/trending/movie/movie_id?language=en-US&api_key=${API_KEY}`, options);
+
+    return data;
+}

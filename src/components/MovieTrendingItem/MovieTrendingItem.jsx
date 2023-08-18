@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const MovieTrendingItem = ({ movieItem }) => {
   return (
     <li>
-      <p>{movieItem.original_title}</p>
+      <Link to={`/movies/${movieItem.id}`}>
+        <p>{movieItem.original_title}</p>
+      </Link>
     </li>
   );
 };

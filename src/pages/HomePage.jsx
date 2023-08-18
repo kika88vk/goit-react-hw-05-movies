@@ -14,11 +14,6 @@ const HomePage = () => {
         setIsLoading(true);
         const moviesFetch = await fetchTrendingMovies();
         setMovies(moviesFetch.results);
-        // console.log(
-        //   '🚀 ~ file: HomePage.jsx:16 ~ fetchPopularMovies ~ movies:',
-        //   movies
-        // );
-        // console.log('moviesFetch.results', moviesFetch.results);
       } catch (error) {
         setError(error.message);
       } finally {

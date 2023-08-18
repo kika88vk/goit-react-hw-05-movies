@@ -1,6 +1,6 @@
-// import { fetchTrendingMovies } from 'services/api';
 import HomePage from 'pages/HomePage';
 import { Route, Routes, NavLink } from 'react-router-dom';
+import MovieDetailsPage from 'pages/MovieDetailsPage';
 
 export const App = () => {
   return (
@@ -13,6 +13,7 @@ export const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
         </Routes>
       </main>
     </div>
