@@ -1,31 +1,32 @@
-import { fetchMovieCredits } from 'services/api';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
+import { fetchMovieReviews } from 'services/api';
 
-const Cast = () => {
+export const Reviews = () => {
   const { movieId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [cast, setCast] = useState(null);
+  const [reviews, setReviews] = useState(null);
 
   useEffect(() => {
     if (!movieId) {
       return;
     }
 
-    async function movieCast() {
+    async function movieReviews() {
       try {
         setIsLoading(true);
-        const fetchCast = await fetchMovieCredits(movieId);
-        setCast(fetchCast.cast);
+        const fetchReviews = await fetchMovieReviews(movieId);
+        setReviews(fetchReviews.results);
       } catch (error) {
         setError(error.message);
       } finally {
         setIsLoading(false);
       }
     }
-    movieCast();
+    movieReviews();
   }, [movieId]);
 
   return (
@@ -40,24 +41,18 @@ const Cast = () => {
           visible={true}
         />
       )}
-      {cast !== null && (
-        <div>
-          <ul>
-            {cast.map(actor => (
-              <li key={actor.id}>
-                <img
-                  alt={actor.name}
-                  src={`http://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                />
-                <p>{actor.name}</p>
-                <p>{actor.character}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {reviews !== null && (
+        <ul>
+          {reviews.map(rev => (
+            <li key={rev.id}>
+              <p>{rev.author}</p>
+              <p>{rev.content}</p>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
 };
 
-export default Cast;
+export default Reviews;
