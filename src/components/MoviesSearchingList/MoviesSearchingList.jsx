@@ -1,22 +1,22 @@
 import MovieTrendingItem from 'components/MoviesTrendingList/MovieTrendingItem/MovieTrendingItem';
 import PropTypes from 'prop-types';
 
-const MoviesTrendingList = ({ movieList }) => {
-  if (movieList === 0) {
+const MoviesSearchingList = ({ searchList }) => {
+  if (searchList === 0) {
     return;
   }
 
   return (
     <ul>
-      {movieList.map(movie => (
+      {searchList.map(movie => (
         <MovieTrendingItem key={movie.id} movieItem={movie} />
       ))}
     </ul>
   );
 };
 
-export default MoviesTrendingList;
+export default MoviesSearchingList;
 
-MoviesTrendingList.propTypes = {
-  movieList: PropTypes.array.isRequired,
+MoviesSearchingList.propTypes = {
+  searchList: PropTypes.array,
 };
