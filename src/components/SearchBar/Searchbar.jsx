@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function Searchbar({ value, onChange, onSubmit }) {
+function Searchbar({ value, onChange }) {
+  const [valueQuery, setValueQuery] = useState('');
+
+  const changeHandler = evt => {
+    setValueQuery(evt.target.value);
+  };
+
+  const onSubmit = evt => {
+    evt.preventDefault();
+    onChange(valueQuery);
+    setValueQuery('');
+  };
+
   return (
     <div>
       <form onSubmit={onSubmit}>
         <input
           type="text"
-          value={value}
-          onChange={e => onChange(e.target.value)}
+          name="query"
+          placeholder="Search . . . "
+          value={valueQuery}
+          onChange={changeHandler}
         />
       </form>
     </div>

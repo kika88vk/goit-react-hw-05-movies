@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchTrendingMovies } from 'services/api';
 import { RotatingLines } from 'react-loader-spinner';
 import MoviesTrendingList from 'components/MoviesTrendingList/MoviesTrendingList';
+import { Heading, WrapMoviesList } from './HomePage.styled';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -26,7 +27,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1>Trending today</h1>
+      <Heading>Trending today</Heading>
       {error !== null && <p>Oops, something went wrong. please, try later</p>}
       {isLoading && (
         <RotatingLines
@@ -37,7 +38,9 @@ const HomePage = () => {
           visible={true}
         />
       )}
-      <MoviesTrendingList movieList={movies} />
+      <WrapMoviesList>
+        <MoviesTrendingList movieList={movies} />
+      </WrapMoviesList>
     </div>
   );
 };

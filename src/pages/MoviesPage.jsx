@@ -4,7 +4,7 @@ import { fetchMovieSearch } from 'services/api';
 import { useSearchParams } from 'react-router-dom';
 import { RotatingLines } from 'react-loader-spinner';
 import MoviesSearchingList from 'components/MoviesSearchingList/MoviesSearchingList';
-import { useDeferredValue } from 'react';
+// import { useDeferredValue } from 'react';
 import { Button } from 'components/Button/Button';
 
 const MoviesPage = () => {
@@ -14,18 +14,20 @@ const MoviesPage = () => {
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [totalPages, setTotalPages] = useState(null);
 
   const queryMovie = searchParams.get('query') ?? '';
-  //   const pageMovie = Number(searchParams.get('page') ?? '');
-  const defferedQuery = useDeferredValue(queryMovie);
+  const pageMovie = Number(searchParams.get('page') ?? '');
+  console.log('pageMovie', pageMovie);
 
   useEffect(() => {
     async function fetchMovieList() {
       try {
         setIsLoading(true);
-        const movies = await fetchMovieSearch(defferedQuery, page);
+        const movies = await fetchMovieSearch(queryMovie, page);
         setMoviesList(movies.results);
         setTotalResults(movies.total_results);
+        setTotalPages(movies.total_pages);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -33,17 +35,15 @@ const MoviesPage = () => {
       }
     }
     fetchMovieList();
-  }, [page, defferedQuery]);
+  }, [page, queryMovie]);
 
   const updateQueryString = query => {
-    const nextParams = query !== '' ? { query } : {};
-    setSearchParams(nextParams);
+    const querySearchParams = query !== '' ? { query } : {};
+    const pageSerchParams = page !== '' ? { page } : {};
+    setPage(1);
+    setSearchParams(querySearchParams, pageSerchParams);
   };
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    setPage(1);
-  };
   const handleBtnIncrementPage = () => {
     setPage(prevPage => prevPage + 1);
   };
@@ -54,11 +54,7 @@ const MoviesPage = () => {
   };
   return (
     <main>
-      <Searchbar
-        value={queryMovie}
-        onChange={updateQueryString}
-        onSubmit={handleSubmit}
-      />
+      <Searchbar onChange={updateQueryString} />
       <div>
         {error !== null && <p>Oops, something went wrong. please, try later</p>}
         {isLoading && (
@@ -70,6 +66,7 @@ const MoviesPage = () => {
             visible={true}
           />
         )}
+        <p>Total pages: {totalPages}</p>
         {moviesList !== null && <MoviesSearchingList searchList={moviesList} />}
         <p>--Page {page}--</p>
         {moviesList?.length < totalResults / page && (
