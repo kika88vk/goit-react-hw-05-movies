@@ -45,10 +45,18 @@ const MovieDetailsPage = () => {
       )}
       {movieObject !== null && (
         <div>
-          <img
-            alt={movieObject.poster_path}
-            src={`http://image.tmdb.org/t/p/w300${movieObject.poster_path}`}
-          ></img>
+          {movieObject.poster_path === null ? (
+            <img
+              alt={movieObject.original_title}
+              src="https://via.placeholder.com/250x200"
+            />
+          ) : (
+            <img
+              alt={movieObject.poster_path}
+              src={`http://image.tmdb.org/t/p/w300${movieObject.poster_path}`}
+            ></img>
+          )}
+
           <h2>
             {movieObject.original_title} ({movieObject.release_date})
           </h2>

@@ -9,6 +9,7 @@ export const Reviews = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [reviews, setReviews] = useState(null);
+  const [totalReviews, setTotalReviews] = useState(0);
 
   useEffect(() => {
     if (!movieId) {
@@ -20,6 +21,7 @@ export const Reviews = () => {
         setIsLoading(true);
         const fetchReviews = await fetchMovieReviews(movieId);
         setReviews(fetchReviews.results);
+        setTotalReviews(fetchReviews.total_results);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -51,6 +53,7 @@ export const Reviews = () => {
           ))}
         </ul>
       )}
+      {totalReviews === 0 && <p>We don't have any reviews for this movie.</p>}
     </div>
   );
 };

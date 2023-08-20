@@ -45,10 +45,18 @@ const Cast = () => {
           <ul>
             {cast.map(actor => (
               <li key={actor.id}>
-                <img
-                  alt={actor.name}
-                  src={`http://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                />
+                {actor.profile_path === null ? (
+                  <img
+                    alt={actor.name}
+                    src="https://via.placeholder.com/150x100"
+                  />
+                ) : (
+                  <img
+                    alt={actor.name}
+                    src={`http://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                  />
+                )}
+
                 <p>{actor.name}</p>
                 <p>{actor.character}</p>
               </li>
@@ -56,6 +64,7 @@ const Cast = () => {
           </ul>
         </div>
       )}
+      {cast?.length === 0 && <p>We don't have any cast for this movie.</p>}
     </div>
   );
 };
