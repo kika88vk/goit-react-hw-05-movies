@@ -6,6 +6,8 @@ import { RotatingLines } from 'react-loader-spinner';
 import MoviesSearchingList from 'components/MoviesSearchingList/MoviesSearchingList';
 // import { useDeferredValue } from 'react';
 import { Button } from 'components/Button/Button';
+import { MoviesSearchListStyled, MoviesSearchTitle } from './MoviesPage.styled';
+import { ButtonWrapStyled } from 'components/Button/Button.styled';
 
 const MoviesPage = () => {
   const [error, setError] = useState(null);
@@ -55,7 +57,7 @@ const MoviesPage = () => {
   return (
     <main>
       <Searchbar onChange={updateQueryString} />
-      <div>
+      <MoviesSearchListStyled>
         {error !== null && <p>Oops, something went wrong. please, try later</p>}
         {isLoading && (
           <RotatingLines
@@ -66,19 +68,19 @@ const MoviesPage = () => {
             visible={true}
           />
         )}
-        <p>Total pages: {totalPages}</p>
+        <MoviesSearchTitle>Total pages: {totalPages}</MoviesSearchTitle>
         {moviesList !== null && <MoviesSearchingList searchList={moviesList} />}
-        <p>--Page {page}--</p>
+        <MoviesSearchTitle>-- Page {page} --</MoviesSearchTitle>
         {moviesList?.length < totalResults / page && (
-          <>
+          <ButtonWrapStyled>
             <Button
               onChangePage={handleBtnDecrementPage}
               title="Previous page"
             />
             <Button onChangePage={handleBtnIncrementPage} title="Next page" />
-          </>
+          </ButtonWrapStyled>
         )}
-      </div>
+      </MoviesSearchListStyled>
     </main>
   );
 };

@@ -10,7 +10,7 @@ const MovieTrendingItem = ({ movieItem }) => {
           {movieItem.poster_path === null ? (
             <img
               alt={movieItem.original_title}
-              src="https://via.placeholder.com/185x100"
+              src="https://via.placeholder.com/185x280"
             />
           ) : (
             <img

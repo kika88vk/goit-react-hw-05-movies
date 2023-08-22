@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+import { ButtonStyled } from './Button.styled';
 
 export const Button = ({ onChangePage, title }) => {
   return (
     <div>
-      <button type="submit" onClick={onChangePage}>
+      <ButtonStyled type="submit" onClick={onChangePage}>
         {title}
-      </button>
+      </ButtonStyled>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import MovieTrendingItem from 'components/MoviesTrendingList/MovieTrendingItem/MovieTrendingItem';
 import PropTypes from 'prop-types';
+import { MoviesListStyled } from './MoviesSearchingList.styled';
 
 const MoviesSearchingList = ({ searchList }) => {
   if (searchList === 0) {
@@ -7,11 +8,11 @@ const MoviesSearchingList = ({ searchList }) => {
   }
 
   return (
-    <ul>
+    <MoviesListStyled>
       {searchList.map(movie => (
         <MovieTrendingItem key={movie.id} movieItem={movie} />
       ))}
-    </ul>
+    </MoviesListStyled>
   );
 };
 

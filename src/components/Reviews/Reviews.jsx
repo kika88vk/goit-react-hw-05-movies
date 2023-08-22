@@ -3,6 +3,11 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
 import { fetchMovieReviews } from 'services/api';
+import {
+  ReviewsListStyled,
+  ReviewsTitleStyled,
+  ReviewsItemStyled,
+} from './Reviews.styled';
 
 export const Reviews = () => {
   const { movieId } = useParams();
@@ -44,14 +49,14 @@ export const Reviews = () => {
         />
       )}
       {reviews !== null && (
-        <ul>
+        <ReviewsListStyled>
           {reviews.map(rev => (
-            <li key={rev.id}>
-              <p>{rev.author}</p>
+            <ReviewsItemStyled key={rev.id}>
+              <ReviewsTitleStyled>{rev.author}</ReviewsTitleStyled>
               <p>{rev.content}</p>
-            </li>
+            </ReviewsItemStyled>
           ))}
-        </ul>
+        </ReviewsListStyled>
       )}
       {totalReviews === 0 && <p>We don't have any reviews for this movie.</p>}
     </div>
