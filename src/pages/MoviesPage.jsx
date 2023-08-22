@@ -39,11 +39,19 @@ const MoviesPage = () => {
     fetchMovieList();
   }, [page, queryMovie]);
 
-  const updateQueryString = query => {
-    const querySearchParams = query !== '' ? { query } : {};
-    const pageSerchParams = page !== '' ? { page } : {};
+  const updateQueryString = (query, page) => {
+    // const querySearchParams = query !== '' ? { query } : {};
+    // const pageSerchParams = page !== '' ? { page } : {};
+    if (query === '') {
+      return setSearchParams({});
+    }
+    if (page === 0) {
+      return setSearchParams({});
+    }
+
     setPage(1);
-    setSearchParams(querySearchParams, pageSerchParams);
+    // setSearchParams(querySearchParams, pageSerchParams);
+    setSearchParams({ query: query, page: page });
   };
 
   const handleBtnIncrementPage = () => {
@@ -56,7 +64,7 @@ const MoviesPage = () => {
   };
   return (
     <main>
-      <Searchbar onChange={updateQueryString} />
+      <Searchbar onChange={updateQueryString} currentPage={page} />
       <MoviesSearchListStyled>
         {error !== null && <p>Oops, something went wrong. please, try later</p>}
         {isLoading && (

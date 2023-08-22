@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { MovieItemStyled } from './MovieTrendingItem.styled';
 
 const MovieTrendingItem = ({ movieItem }) => {
+  const location = useLocation();
   return (
     <MovieItemStyled>
-      <Link to={`/movies/${movieItem.id}`}>
+      <Link to={`/movies/${movieItem.id}`} state={{ from: location }}>
         <div>
           {movieItem.poster_path === null ? (
             <img

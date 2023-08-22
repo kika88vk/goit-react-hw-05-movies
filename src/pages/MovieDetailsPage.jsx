@@ -1,14 +1,15 @@
 import { fetchMovieDetails } from 'services/api';
 import { RotatingLines } from 'react-loader-spinner';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import {
   MovieCardWrapStyled,
   InfoMovieCardStyled,
   HeadingAddInfoStyled,
   AddInfoWrapStyled,
   ListWrapAddStyled,
+  LinkStyled,
 } from './MovieDetailsPage.styled';
 
 const MovieDetailsPage = () => {
@@ -16,6 +17,9 @@ const MovieDetailsPage = () => {
   const [movieObject, setMovieObject] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const location = useLocation();
+  const goBackRef = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     if (!movieId) {
@@ -39,7 +43,7 @@ const MovieDetailsPage = () => {
 
   return (
     <div>
-      {/* <button type="button">Go back</button> */}
+      <LinkStyled to={goBackRef.current}> Go back</LinkStyled>
       {error !== null && <p>Oops, something went wrong. please, try later</p>}
       {isLoading && (
         <RotatingLines
