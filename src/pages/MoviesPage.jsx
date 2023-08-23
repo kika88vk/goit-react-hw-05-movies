@@ -21,6 +21,7 @@ const MoviesPage = () => {
   const queryMovie = searchParams.get('query') ?? '';
   const pageMovie = Number(searchParams.get('page') ?? '');
   console.log('pageMovie', pageMovie);
+  console.log('page', page);
 
   useEffect(() => {
     async function fetchMovieList() {
@@ -56,12 +57,15 @@ const MoviesPage = () => {
 
   const handleBtnIncrementPage = () => {
     setPage(prevPage => prevPage + 1);
+    // setSearchParams({ page: page });
   };
   const handleBtnDecrementPage = () => {
     if (page !== 1) {
       setPage(prevPage => prevPage - 1);
     }
+    // setSearchParams({ page: page });
   };
+
   return (
     <main>
       <Searchbar onChange={updateQueryString} currentPage={page} />
@@ -76,9 +80,14 @@ const MoviesPage = () => {
             visible={true}
           />
         )}
-        <MoviesSearchTitle>Total pages: {totalPages}</MoviesSearchTitle>
+        {totalResults !== 0 && (
+          <MoviesSearchTitle>Total pages: {totalPages}</MoviesSearchTitle>
+        )}
+
         {moviesList !== null && <MoviesSearchingList searchList={moviesList} />}
-        <MoviesSearchTitle>-- Page {page} --</MoviesSearchTitle>
+        {totalResults !== 0 && (
+          <MoviesSearchTitle>-- Page {page} --</MoviesSearchTitle>
+        )}
         {moviesList?.length < totalResults / page && (
           <ButtonWrapStyled>
             <Button

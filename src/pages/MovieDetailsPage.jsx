@@ -1,6 +1,6 @@
 import { fetchMovieDetails } from 'services/api';
 import { RotatingLines } from 'react-loader-spinner';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import {
@@ -98,7 +98,9 @@ const MovieDetailsPage = () => {
                 <Link to="reviews">Reviews</Link>
               </li>
             </ListWrapAddStyled>
-            <Outlet />
+            <Suspense fallback={<RotatingLines />}>
+              <Outlet />
+            </Suspense>
           </AddInfoWrapStyled>
         </div>
       )}
