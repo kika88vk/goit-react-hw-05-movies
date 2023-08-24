@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { SearchFormStyled, SearchInputStyled } from './Searchbar.styled';
 
-function Searchbar({ currentPage, onChange }) {
-  const [valueQuery, setValueQuery] = useState('');
+function Searchbar({ query, onChange }) {
+  const [valueQuery, setValueQuery] = useState(query);
 
   const changeHandler = evt => {
     setValueQuery(evt.target.value);
@@ -10,8 +10,7 @@ function Searchbar({ currentPage, onChange }) {
 
   const onSubmit = evt => {
     evt.preventDefault();
-    onChange(valueQuery, currentPage);
-    setValueQuery('');
+    onChange(valueQuery);
   };
 
   return (

@@ -13,21 +13,22 @@ const MoviesPage = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [moviesList, setMoviesList] = useState(null);
-  const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [totalPages, setTotalPages] = useState(null);
+  const [page, setPage] = useState(Number(searchParams.get('page') ?? ''));
+  const [query, setQuery] = useState(searchParams.get('query') ?? '');
 
-  const queryMovie = searchParams.get('query') ?? '';
-  const pageMovie = Number(searchParams.get('page') ?? '');
-  console.log('pageMovie', pageMovie);
-  console.log('page', page);
+  // const queryMovie = searchParams.get('query') ?? '';
+  // const pageMovie = Number(searchParams.get('page') ?? '');
+  // console.log('pageMovie', pageMovie);
+  // console.log('page', page);
 
   useEffect(() => {
     async function fetchMovieList() {
       try {
         setIsLoading(true);
-        const movies = await fetchMovieSearch(queryMovie, page);
+        const movies = await fetchMovieSearch(query, page);
         setMoviesList(movies.results);
         setTotalResults(movies.total_results);
         setTotalPages(movies.total_pages);
@@ -37,38 +38,32 @@ const MoviesPage = () => {
         setIsLoading(false);
       }
     }
-    fetchMovieList();
-  }, [page, queryMovie]);
 
-  const updateQueryString = (query, page) => {
-    // const querySearchParams = query !== '' ? { query } : {};
-    // const pageSerchParams = page !== '' ? { page } : {};
-    if (query === '') {
-      return setSearchParams({});
+    if (!page || !query) {
+      setSearchParams({});
+    } else {
+      fetchMovieList();
+      setSearchParams({ query: query, page: page });
     }
-    if (page === 0) {
-      return setSearchParams({});
-    }
+  }, [page, query, setSearchParams]);
 
+  const updateQueryString = query => {
     setPage(1);
-    // setSearchParams(querySearchParams, pageSerchParams);
-    setSearchParams({ query: query, page: page });
+    setQuery(query);
   };
 
   const handleBtnIncrementPage = () => {
     setPage(prevPage => prevPage + 1);
-    // setSearchParams({ page: page });
   };
   const handleBtnDecrementPage = () => {
     if (page !== 1) {
       setPage(prevPage => prevPage - 1);
     }
-    // setSearchParams({ page: page });
   };
 
   return (
     <main>
-      <Searchbar onChange={updateQueryString} currentPage={page} />
+      <Searchbar onChange={updateQueryString} query={query} />
       <MoviesSearchListStyled>
         {error !== null && <p>Oops, something went wrong. please, try later</p>}
         {isLoading && (
@@ -80,12 +75,12 @@ const MoviesPage = () => {
             visible={true}
           />
         )}
-        {totalResults !== 0 && (
+        {totalResults && (
           <MoviesSearchTitle>Total pages: {totalPages}</MoviesSearchTitle>
         )}
 
-        {moviesList !== null && <MoviesSearchingList searchList={moviesList} />}
-        {totalResults !== 0 && (
+        {moviesList && <MoviesSearchingList searchList={moviesList} />}
+        {totalResults && (
           <MoviesSearchTitle>-- Page {page} --</MoviesSearchTitle>
         )}
         {moviesList?.length < totalResults / page && (
